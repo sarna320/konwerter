@@ -17,64 +17,16 @@ int b2O(string liczba);
 string b2H(string liczba);
 string d2B(string liczba);
 string o2D(string liczba);
+string h2D(string liczba);
 void konwertB(string liczba, char nowySystemLiczby);
 void konwertD(string liczba, char nowySystemLiczby);
 void konwertO(string liczba, char nowySystemLiczby);
 void konwertH(string liczba, char nowySystemLiczby);
+void interfejs();
 
 int main()
 {
-    while (true)
-    {
-        char systemLiczby = wyborSystemu();
-        string liczba = wyborLiczby();
-        switch (systemLiczby)
-        {
-        case 'b':
-            if (checkB(liczba))
-            {
-                char nowySystemLiczby = wyborSystemu();
-                konwertB(liczba, nowySystemLiczby);
-            }
-            else
-            {
-                cout << "Podana liczna nie jest w formacie binarnym" << endl;
-            }
-            break;
-        case 'd':
-            if (checkD(liczba))
-            {
-                char nowySystemLiczby = wyborSystemu();
-                konwertD(liczba, nowySystemLiczby);
-            }
-            else
-            {
-                cout << "Podana liczna nie jest w formacie dzisietnym" << endl;
-            }
-            break;
-        case 'o':
-            if (checkO(liczba))
-            {
-                char nowySystemLiczby = wyborSystemu();
-                konwertO(liczba, nowySystemLiczby);
-            }
-            else
-            {
-                cout << "Podana liczna nie jest w formacie oktalnym" << endl;
-            }
-            break;
-        case 'h':
-            if (checkH(liczba))
-            {
-                cout << "GOOD" << endl;
-            }
-            else
-            {
-                cout << "Podana liczna nie jest w formacie hex" << endl;
-            }
-            break;
-        }
-    }
+    interfejs();
     return 0;
 }
 
@@ -281,6 +233,25 @@ string o2D(string liczba)
     return to_string(suma);
 }
 
+string h2D(string liczba)
+{
+    int suma = 0;
+    int liczbaInt;
+    for (size_t i = 0; i < liczba.length(); i++)
+    {
+        if (liczba[i] >= 48 && liczba[i] <= 57)
+        {
+            liczbaInt = liczba[i] - '0';
+        }
+        else
+        {
+            liczbaInt = liczba[i] - 'A' + 10;
+        }
+        suma = suma + pow(16, liczba.length() - i - 1) * liczbaInt;
+    }
+    return to_string(suma);
+}
+
 void konwertB(string liczba, char nowySystemLiczby)
 {
 
@@ -321,7 +292,7 @@ void konwertD(string liczba, char nowySystemLiczby)
     }
 }
 
-void konwertO(string liczba, char nowySystemLiczby) // nie zrobiona
+void konwertO(string liczba, char nowySystemLiczby)
 {
     switch (nowySystemLiczby)
     {
@@ -340,21 +311,77 @@ void konwertO(string liczba, char nowySystemLiczby) // nie zrobiona
     }
 }
 
-void konwertH(string liczba, char nowySystemLiczby) // nie zrobiona
+void konwertH(string liczba, char nowySystemLiczby)
 {
     switch (nowySystemLiczby)
     {
     case 'b':
-        cout << liczba << endl;
+        cout << d2B(h2D(liczba)) << endl;
         break;
     case 'd':
-        cout << liczba << endl;
+        cout << h2D(liczba) << endl;
         break;
     case 'o':
-        cout << liczba << endl;
+        cout << b2O(d2B(h2D(liczba))) << endl;
         break;
     case 'h':
         cout << liczba << endl;
         break;
+    }
+}
+
+void interfejs()
+{
+    while (true)
+    {
+        char systemLiczby = wyborSystemu();
+        string liczba = wyborLiczby();
+        switch (systemLiczby)
+        {
+        case 'b':
+            if (checkB(liczba))
+            {
+                char nowySystemLiczby = wyborSystemu();
+                konwertB(liczba, nowySystemLiczby);
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie binarnym" << endl;
+            }
+            break;
+        case 'd':
+            if (checkD(liczba))
+            {
+                char nowySystemLiczby = wyborSystemu();
+                konwertD(liczba, nowySystemLiczby);
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie dzisietnym" << endl;
+            }
+            break;
+        case 'o':
+            if (checkO(liczba))
+            {
+                char nowySystemLiczby = wyborSystemu();
+                konwertO(liczba, nowySystemLiczby);
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie oktalnym" << endl;
+            }
+            break;
+        case 'h':
+            if (checkH(liczba))
+            {
+                char nowySystemLiczby = wyborSystemu();
+                konwertH(liczba, nowySystemLiczby);
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie hex" << endl;
+            }
+            break;
+        }
     }
 }
