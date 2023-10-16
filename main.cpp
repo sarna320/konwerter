@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include <deque>
+#include <string>
+#include <algorithm>
+
 using namespace std;
 
 char wyborSystemu();
@@ -12,7 +15,12 @@ bool checkH(string liczba);
 int b2D(string liczba);
 int b2O(string liczba);
 string b2H(string liczba);
+string d2B(string liczba);
 void konwertB(string liczba, char nowySystemLiczby);
+void konwertD(string liczba, char nowySystemLiczby);
+void konwertO(string liczba, char nowySystemLiczby);
+void konwertH(string liczba, char nowySystemLiczby);
+
 int main()
 {
     while (true)
@@ -35,7 +43,8 @@ int main()
         case 'd':
             if (checkD(liczba))
             {
-                cout << "GOOD" << endl;
+                char nowySystemLiczby = wyborSystemu();
+                konwertD(liczba, nowySystemLiczby);
             }
             else
             {
@@ -78,6 +87,7 @@ char wyborSystemu()
     cin >> system;
     return system;
 }
+
 string wyborLiczby()
 {
     cout << "Podaj liczbe" << endl;
@@ -85,6 +95,7 @@ string wyborLiczby()
     cin >> liczba;
     return liczba;
 }
+
 bool checkB(string liczba)
 {
     for (size_t i = 0; i < liczba.length(); i++)
@@ -96,6 +107,7 @@ bool checkB(string liczba)
     }
     return true;
 }
+
 bool checkD(string liczba)
 {
     for (size_t i = 0; i < liczba.length(); i++)
@@ -107,6 +119,7 @@ bool checkD(string liczba)
     }
     return true;
 }
+
 bool checkO(string liczba)
 {
     for (size_t i = 0; i < liczba.length(); i++)
@@ -118,6 +131,7 @@ bool checkO(string liczba)
     }
     return true;
 }
+
 bool checkH(string liczba)
 {
     for (size_t i = 0; i < liczba.length(); i++)
@@ -129,6 +143,7 @@ bool checkH(string liczba)
     }
     return true;
 }
+
 int b2D(string liczba)
 {
     int suma = 0;
@@ -139,6 +154,7 @@ int b2D(string liczba)
     }
     return suma;
 }
+
 int b2O(string liczba)
 {
     int liczbaInt = b2D(liczba);
@@ -152,25 +168,7 @@ int b2O(string liczba)
     }
     return reszta;
 }
-void konwertB(string liczba, char nowySystemLiczby)
-{
 
-    switch (nowySystemLiczby)
-    {
-    case 'b':
-        cout << liczba << endl;
-        break;
-    case 'd':
-        cout << b2D(liczba) << endl;
-        break;
-    case 'o':
-        cout << b2O(liczba) << endl;
-        break;
-    case 'h':
-        cout << b2H(liczba) << endl;
-        break;
-    }
-}
 string b2H(string liczba)
 {
     int iloscZer = 0;
@@ -254,4 +252,96 @@ string b2H(string liczba)
         }
     }
     return liczbaHex;
+}
+
+string d2B(string liczba)
+{
+    int liczbaInt = stoi(liczba);
+    string liczbaB;
+    string reszta;
+    while (liczbaInt >= 1)
+    {
+        reszta += char((liczbaInt % 2) + '0');
+        liczbaInt = liczbaInt / 2;
+    }
+    reverse(reszta.begin(), reszta.end());
+    return reszta;
+}
+
+void konwertB(string liczba, char nowySystemLiczby)
+{
+
+    switch (nowySystemLiczby)
+    {
+    case 'b':
+        cout << liczba << endl;
+        break;
+    case 'd':
+        cout << b2D(liczba) << endl;
+        break;
+    case 'o':
+        cout << b2O(liczba) << endl;
+        break;
+    case 'h':
+        cout << b2H(liczba) << endl;
+        break;
+    }
+}
+
+void konwertD(string liczba, char nowySystemLiczby) // niezrobiona
+{
+    switch (nowySystemLiczby)
+    {
+    case 'b':
+        cout << d2B(liczba) << endl;
+        ;
+        break;
+    case 'd':
+        cout << liczba << endl;
+        break;
+    case 'o':
+        cout << b2O(d2B(liczba)) << endl;
+        break;
+    case 'h':
+        cout << b2H(d2B(liczba)) << endl;
+        break;
+    }
+}
+
+void konwertO(string liczba, char nowySystemLiczby) // nie zrobiona
+{
+    switch (nowySystemLiczby)
+    {
+    case 'b':
+        cout << liczba << endl;
+        break;
+    case 'd':
+        cout << liczba << endl;
+        break;
+    case 'o':
+        cout << liczba << endl;
+        break;
+    case 'h':
+        cout << liczba << endl;
+        break;
+    }
+}
+
+void konwertH(string liczba, char nowySystemLiczby) // nie zrobiona
+{
+    switch (nowySystemLiczby)
+    {
+    case 'b':
+        cout << liczba << endl;
+        break;
+    case 'd':
+        cout << liczba << endl;
+        break;
+    case 'o':
+        cout << liczba << endl;
+        break;
+    case 'h':
+        cout << liczba << endl;
+        break;
+    }
 }
