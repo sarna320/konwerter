@@ -16,6 +16,7 @@ int b2D(string liczba);
 int b2O(string liczba);
 string b2H(string liczba);
 string d2B(string liczba);
+string o2D(string liczba);
 void konwertB(string liczba, char nowySystemLiczby);
 void konwertD(string liczba, char nowySystemLiczby);
 void konwertO(string liczba, char nowySystemLiczby);
@@ -54,7 +55,8 @@ int main()
         case 'o':
             if (checkO(liczba))
             {
-                cout << "GOOD" << endl;
+                char nowySystemLiczby = wyborSystemu();
+                konwertO(liczba, nowySystemLiczby);
             }
             else
             {
@@ -268,6 +270,17 @@ string d2B(string liczba)
     return reszta;
 }
 
+string o2D(string liczba)
+{
+    int suma = 0;
+    for (size_t i = 0; i < liczba.length(); i++)
+    {
+        int liczbaInt = liczba[i] - '0';
+        suma = suma + pow(8, liczba.length() - i - 1) * liczbaInt;
+    }
+    return to_string(suma);
+}
+
 void konwertB(string liczba, char nowySystemLiczby)
 {
 
@@ -288,7 +301,7 @@ void konwertB(string liczba, char nowySystemLiczby)
     }
 }
 
-void konwertD(string liczba, char nowySystemLiczby) // niezrobiona
+void konwertD(string liczba, char nowySystemLiczby)
 {
     switch (nowySystemLiczby)
     {
@@ -313,16 +326,16 @@ void konwertO(string liczba, char nowySystemLiczby) // nie zrobiona
     switch (nowySystemLiczby)
     {
     case 'b':
-        cout << liczba << endl;
+        cout << d2B(o2D(liczba)) << endl;
         break;
     case 'd':
-        cout << liczba << endl;
+        cout << o2D(liczba) << endl;
         break;
     case 'o':
-        cout << liczba << endl;
+        cout << b2O(d2B(o2D(liczba))) << endl;
         break;
     case 'h':
-        cout << liczba << endl;
+        cout << b2H(d2B(o2D(liczba))) << endl;
         break;
     }
 }
