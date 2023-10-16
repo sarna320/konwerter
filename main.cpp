@@ -6,10 +6,11 @@ using namespace std;
 char wyborSystemu();
 string wyborLiczby();
 bool checkB(string liczba);
+bool checkD(string liczba);
 int b2D(string liczba);
 int b2O(string liczba);
+string b2H(string liczba);
 void konwertB(string liczba, char nowySystemLiczby);
-
 int main()
 {
     while (true)
@@ -74,6 +75,10 @@ bool checkB(string liczba)
     }
     return true;
 }
+bool checkD(string liczba)
+{
+    
+}
 int b2D(string liczba)
 {
     int suma = 0;
@@ -112,51 +117,79 @@ void konwertB(string liczba, char nowySystemLiczby)
         cout << b2O(liczba) << endl;
         break;
     case 'h':
-        int iloscZer = 0;
-        if (liczba.length() % 4 != 0)
-        {
-            iloscZer = 4 - liczba.length() % 4;
-        }
-        cout << iloscZer << endl;
-        int iloscGrup = ceil(liczba.length() / 4.0);
-        cout << iloscGrup << endl;
-        deque<string> liczbaPogrupowana;
-        string x;
-        if (iloscZer != 0&&iloscGrup>1)
-        {
-            for (size_t i = 0; i < iloscZer; i++)
-            {
-                x.append("0");
-            }
-            for (size_t i = 0; i < 4 - iloscZer; i++)
-            {
-                x += liczba[i];
-            }
-            cout << x << endl;
-            liczbaPogrupowana.push_back(x);
-            x.clear();
-            int licznik = 4 - iloscZer;
-            for (size_t i = 0; i < iloscGrup; i++)
-            {
-                for (size_t i = 0; i < 4; i++)
-                {
-                    x += liczba[licznik];
-                    licznik++;
-                }
-                liczbaPogrupowana.push_back(x);
-                cout << x << endl;
-                x.clear();
-            }
-        }
-        liczbaPogrupowana.pop_front();
-        liczbaPogrupowana.pop_back();
-        while (!liczbaPogrupowana.empty())
-        {
-
-            cout << b2D(liczbaPogrupowana.front()) << endl;
-            liczbaPogrupowana.pop_front();
-        }
-
+        cout << b2H(liczba) << endl;
         break;
     }
+}
+string b2H(string liczba)
+{
+    int iloscZer = 0;
+    if (liczba.length() % 4 != 0)
+    {
+        iloscZer = 4 - liczba.length() % 4;
+    }
+    int iloscGrup = ceil(liczba.length() / 4.0);
+    deque<string> liczbaPogrupowana;
+    liczbaPogrupowana.clear();
+    string x;
+    if (iloscZer != 0)
+    {
+        for (size_t i = 0; i < iloscZer; i++)
+        {
+            x += ("0");
+        }
+        for (size_t i = 0; i < 4 - iloscZer; i++)
+        {
+            x += liczba[i];
+        }
+        liczbaPogrupowana.push_back(x);
+        x.clear();
+    }
+    if (iloscGrup > 1)
+    {
+        int licznik = 4 - iloscZer;
+        for (size_t i = 0; i < iloscGrup - 1; i++)
+        {
+            for (size_t i = 0; i < 4; i++)
+            {
+                x += liczba[licznik];
+                licznik++;
+            }
+            liczbaPogrupowana.push_back(x);
+            x.clear();
+        }
+    }
+    string liczbaHex;
+    for (string x : liczbaPogrupowana)
+    {
+        if (b2D(x) >= 0 && b2D(x) < 10)
+        {
+            liczbaHex += char(b2D(x) + '0');
+        }
+        else
+        {
+            switch (b2D(x))
+            {
+            case 10:
+                liczbaHex += 'A';
+                break;
+            case 11:
+                liczbaHex += 'B';
+                break;
+            case 12:
+                liczbaHex += 'C';
+                break;
+            case 13:
+                liczbaHex += 'D';
+                break;
+            case 14:
+                liczbaHex += 'E';
+                break;
+            case 15:
+                liczbaHex += 'F';
+                break;
+            }
+        }
+    }
+    return liczbaHex;
 }
