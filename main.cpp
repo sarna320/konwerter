@@ -7,6 +7,8 @@ char wyborSystemu();
 string wyborLiczby();
 bool checkB(string liczba);
 bool checkD(string liczba);
+bool checkO(string liczba);
+bool checkH(string liczba);
 int b2D(string liczba);
 int b2O(string liczba);
 string b2H(string liczba);
@@ -15,7 +17,6 @@ int main()
 {
     while (true)
     {
-
         char systemLiczby = wyborSystemu();
         string liczba = wyborLiczby();
         switch (systemLiczby)
@@ -42,14 +43,27 @@ int main()
             }
             break;
         case 'o':
-            /* code */
+            if (checkO(liczba))
+            {
+                cout << "GOOD" << endl;
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie oktalnym" << endl;
+            }
             break;
         case 'h':
-            /* code */
+            if (checkH(liczba))
+            {
+                cout << "GOOD" << endl;
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie hex" << endl;
+            }
             break;
         }
     }
-
     return 0;
 }
 
@@ -87,6 +101,28 @@ bool checkD(string liczba)
     for (size_t i = 0; i < liczba.length(); i++)
     {
         if (liczba[i] < 48 || liczba[i] > 57) // 48 to 0 57 to 9 w ASCII
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool checkO(string liczba)
+{
+    for (size_t i = 0; i < liczba.length(); i++)
+    {
+        if (liczba[i] < 48 || liczba[i] > 55) // 48 to 0 57 to 7 w ASCII
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool checkH(string liczba)
+{
+    for (size_t i = 0; i < liczba.length(); i++)
+    {
+        if ((liczba[i] < 48 || liczba[i] > 57) && (liczba[i] < 65 || liczba[i] > 70))
         {
             return false;
         }
