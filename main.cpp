@@ -18,12 +18,12 @@ int main()
 
         char systemLiczby = wyborSystemu();
         string liczba = wyborLiczby();
-        char nowySystemLiczby = wyborSystemu();
         switch (systemLiczby)
         {
         case 'b':
             if (checkB(liczba))
             {
+                char nowySystemLiczby = wyborSystemu();
                 konwertB(liczba, nowySystemLiczby);
             }
             else
@@ -32,7 +32,14 @@ int main()
             }
             break;
         case 'd':
-            /* code */
+            if (checkD(liczba))
+            {
+                cout << "GOOD" << endl;
+            }
+            else
+            {
+                cout << "Podana liczna nie jest w formacie dzisietnym" << endl;
+            }
             break;
         case 'o':
             /* code */
@@ -77,7 +84,14 @@ bool checkB(string liczba)
 }
 bool checkD(string liczba)
 {
-    
+    for (size_t i = 0; i < liczba.length(); i++)
+    {
+        if (liczba[i] < 48 || liczba[i] > 57) // 48 to 0 57 to 9 w ASCII
+        {
+            return false;
+        }
+    }
+    return true;
 }
 int b2D(string liczba)
 {
@@ -132,8 +146,10 @@ string b2H(string liczba)
     deque<string> liczbaPogrupowana;
     liczbaPogrupowana.clear();
     string x;
+    int licznik = 0;
     if (iloscZer != 0)
     {
+        licznik = 4 - iloscZer;
         for (size_t i = 0; i < iloscZer; i++)
         {
             x += ("0");
@@ -145,9 +161,19 @@ string b2H(string liczba)
         liczbaPogrupowana.push_back(x);
         x.clear();
     }
+    if (iloscZer == 0)
+    {
+        for (size_t i = 0; i < 4; i++)
+        {
+            x += liczba[licznik];
+            licznik++;
+        }
+        liczbaPogrupowana.push_back(x);
+        x.clear();
+    }
+
     if (iloscGrup > 1)
     {
-        int licznik = 4 - iloscZer;
         for (size_t i = 0; i < iloscGrup - 1; i++)
         {
             for (size_t i = 0; i < 4; i++)
